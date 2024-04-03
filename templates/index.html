@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+button {
+   display: block;
+   color: #ffffff;
+   background-color: #2d63c8;
+   font-size: 19px;
+   border: 1px solid #2dc8c5;
+   padding: 15px 50px;
+   cursor: pointer;
+}
+
+button:hover {
+  color: #2d63c8;
+  background-color: #ffffff;	
+}
+
+</style>
+<div class="container-xxl">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Video Feed</h2>
+        <img src="{{url_for('videofeed')}}" height="480" width="640">
+        <p>Capture image here</p>
+        <button id="capture" onclick="capturePhoto()">Capture</button>
+        <div id="captureAlert" class="alert" role="alert" style="display: none;"></div>
+      </div>
+      <div class="col-md-6">
+        <h2>Robot Control</h2>
+            <table>
+  <tr>
+    <th></th>
+    <th><button id="forward">^</button></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><button id="left"><</button></td>
+    <td><button id="eye">O</button></td>
+    <td><button id="right">></button></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><button id="backward">v</button></td>
+    <td></td>
+  </tr>
+</table>
+      </div>
+    </div>
+  </div>
+<script>
+$('#eye').on('mousedown', function(){
+	$.get('/on');
+	});
+
+$('#eye').on('mouseup', function(){
+	$.get('/off');
+	});
+$('#forward').on('mousedown', function(){
+	$.get('/forward');
+	});
+
+$('#forward').on('mouseup', function(){
+	$.get('/stop');
+	});
+$('#backward').on('mousedown', function(){
+	$.get('/backward');
+	});
+
+$('#backward').on('mouseup', function(){
+	$.get('/stop');
+	});
+$('#left').on('mousedown', function(){
+	$.get('/left');
+	});
+
+$('#left').on('mouseup', function(){
+	$.get('/stop');
+	});
+$('#right').on('mousedown', function(){
+	$.get('/right');
+	});
+
+$('#right').on('mouseup', function(){
+	$.get('/stop');
+	});
+
+let captureButton = document.getElementById('capture');
+let isButtonEnabled = true;
+
+function enableCaptureButton() {
+	isButtonEnabled = true;
+	captureButton.disabled = false;
+}
+
+function capturePhoto() {
+	if (!isButtonEnabled) {
+		return;
+	}
+
+	captureButton.disabled = true;
+	isButtonEnabled = false;
+	const alertElement = document.getElementById('captureAlert');
+
+	fetch('/capture', {
+		method: 'POST'
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		enableCaptureButton();
+		alertElement.className = 'alert alert-success'
+		alertElement.textContent = 'Image saved successfully.'
+
+		enableCaptureButton();
+	});
+	alertElement.style.display = 'block';
+
+	setTimeout(() => {
+		alertElement.style.display = 'none';
+	}, 5000);
+}
+</script>
+
+{% endblock %}
