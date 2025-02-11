@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-xxl">
+<div class="container px-4 py-5 pt-5 pb-0 mt-4">
+<h2 class="pb-2 border-bottom">About OpenVINO Picamera2 Livestream UI </h2>
+<div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+<div class="col d-flex flex-column align-items-start gap-2">
+<h2 class="fw-bold text-body-emphasis">Web Interface for the Raspberry Pi Camera Module and the OpenVINO Toolkit</h2>
+<p class="text-body-secondary"> This project uses the Picamera2 library to take images and the OpenVINO toolkit classifies them, detects text or recognizes vehicles using pretrained models. This project will require the Pi Camera module and the Intel NCS2 (Neural Compute Stick 2)</p>
+<a class="btn btn-primary btn-lg" href="https://github.com/sentairanger/OpenVINO-Picamera2-Livestream">GitHub Repository</a>
+<div class="col">
+<h4>Capture Images</h4>
+<p class="text-body-secondary">Capture images using a single button and save them to a gallery.</p>
+<h4>Classify Images</h4>
+<p class="text-body-secondary">After capturing images, use OpenVINO's classification model to classify the images</p>
+<h4>Detect Text</h4>
+<p class="text-body-secondary"> You can also use OpenVINO's text detection model to detect text in an image.</p>
+<h4>Recognize Vehicles</h4>
+<p class="text-body-secondary"> You can also use OpenVINO's vehicle detection and recognition models to detect and recognize vehicles.</p>
+<h4>Gallery</h4>
+<p class="text-body-secondary">The gallery in this project will allow you to view the text detected in the image or the vehicle that was detected in the image.</p>
+<h3>The Components of the Project</h3>
+<h4>Picamera2</h4>
+<ul>
+<li><a href="https://github.com/raspberrypi/picamera2" class="icon-link">Picamera2 GitHub Repository</a></li>
+<li><a href="https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf" class="icon-link">Picamera2 Manual</a></li>
+</ul>
+<p>This project uses the picamera2 library to control the Camera module.</p>
+<h4>OpenVINO</h4>
+<p>This project utilizes the OpenVINO toolkit which also requires the Intel NCS2</p>
+<ul>
+<li><a href="https://gist.github.com/sentairanger/caf11a2432ceebd715c6b33c224f4960" class="icon-link">OpenVINO Installation Guide</a></li>
+</ul>
+<h4>Flask</h4>
+<p>This project utilizes the web framework Flask</p>
+<h4>Bootstrap</h4>
+<p>Bootstrap is used to customize this project.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

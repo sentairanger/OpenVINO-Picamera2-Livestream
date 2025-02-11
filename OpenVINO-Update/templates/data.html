@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+ </style>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <img src="{{image_file}}" class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">Data</h5>
+          <p class="card-text">Choose an option to process the image:</p>
+          <button type="button" id="classify" class="btn btn-primary mr-2" onclick="classifyPhoto()">Classify</button>
+          <button type="button" id="text" class="btn btn-primary mr-2" onclick="textPhoto()">Detect Text</button>
+          <button type="button" id="vehicle" class="btn btn-primary" onclick="vehiclePhoto()">Vehicle Recognition</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="captureAlert" class="alert" role="alert" style="display: none;"></div>
+<div id="json_data"></div>
+<script>
+let classifyButton = document.getElementById('classify');
+let isButtonEnabled = true;
+
+function enableClassifyButton() {
+	isButtonEnabled = true;
+	classifyButton.disabled = false;
+}
+
+function classifyPhoto() {
+	if (!isButtonEnabled) {
+		return;
+	}
+
+	classifyButton.disabled = true;
+	isButtonEnabled = false;
+	const alertElement = document.getElementById('captureAlert');
+
+	fetch('/classify', {
+		method: 'POST',
+		headers: {
+            'Content-Type': 'application/json'
+        }
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		document.getElementById('json_data').innerHTML = JSON.stringify(data);
+        enableClassifyButton();
+		alertElement.className = 'alert alert-success'
+		alertElement.textContent = 'Image classified successfully'
+
+		enableClassifyButton();
+	});
+	alertElement.style.display = 'block';
+
+	setTimeout(() => {
+		alertElement.style.display = 'none';
+		document.getElementById('json_data').innerHTML = ''
+	}, 5000);
+}
+
+let textButton = document.getElementById('text');
+let isTextButtonEnabled = true;
+
+function enableTextButton() {
+	isTextButtonEnabled = true;
+	textButton.disabled = false;
+}
+
+function textPhoto() {
+	if (!isTextButtonEnabled) {
+		return;
+	}
+
+	textButton.disabled = true;
+	isTextButtonEnabled = false;
+	const alertElement = document.getElementById('captureAlert');
+
+	fetch('/detect', {
+		method: 'POST',
+		headers: {
+            'Content-Type': 'application/json'
+        }
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		document.getElementById('json_data').innerHTML = JSON.stringify(data);
+        enableTextButton();
+		alertElement.className = 'alert alert-success'
+		alertElement.textContent = 'Text detected successfully'
+
+		enableTextButton();
+	});
+	alertElement.style.display = 'block';
+
+	setTimeout(() => {
+		alertElement.style.display = 'none';
+		document.getElementById('json_data').innerHTML = ''
+	}, 5000);
+}
+
+let vehicleButton = document.getElementById('vehicle');
+let isVehicleButtonEnabled = true;
+
+function enableVehicleButton() {
+	isVehicleButtonEnabled = true;
+	vehicleButton.disabled = false;
+}
+
+function vehiclePhoto() {
+	if (!isVehicleButtonEnabled) {
+		return;
+	}
+
+	vehicleButton.disabled = true;
+	isVehicleButtonEnabled = false;
+	const alertElement = document.getElementById('captureAlert');
+
+	fetch('/vehicle', {
+		method: 'POST',
+		headers: {
+            'Content-Type': 'application/json'
+        }
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		document.getElementById('json_data').innerHTML = JSON.stringify(data);
+        enableVehicleButton();
+		alertElement.className = 'alert alert-success'
+		alertElement.textContent = 'Text detected successfully'
+
+		enableVehicleButton();
+	});
+	alertElement.style.display = 'block';
+
+	setTimeout(() => {
+		alertElement.style.display = 'none';
+		document.getElementById('json_data').innerHTML = ''
+	}, 5000);
+}
+</script>
+{% endblock %}
